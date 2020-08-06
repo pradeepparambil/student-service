@@ -1,0 +1,6 @@
+DROP DATABASE IF EXISTS studentservice;
+DROP USER IF EXISTS 'student_service'@'%';
+CREATE DATABASE IF NOT EXISTS studentservice CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS 'student_service'@'%' IDENTIFIED WITH mysql_native_password BY 'password';
+
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, DROP, REFERENCES, INDEX, ALTER, EXECUTE, CREATE VIEW, SHOW VIEW, CREATE ROUTINE, ALTER ROUTINE, EVENT, TRIGGER ON studentservice.* TO 'student_service'@'%';

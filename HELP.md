@@ -1,7 +1,7 @@
 # Read Me First
 The following was discovered as part of building this project:
 
-* The original package name 'com.teksenz.training-backend' is invalid and this project uses 'com.teksenz.trainingbackend' instead.
+* The original package name 'com.teksenz.training-backend' is invalid and this project uses 'com.teksenz.studentservice' instead.
 
 # Getting Started
 

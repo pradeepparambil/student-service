@@ -23,7 +23,7 @@ public class Referee extends BaseEntity{
     private String phone;
     @JsonIgnoreProperties("referee")
     @OneToMany(mappedBy = "referee", cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
-    private List<Student> students = new ArrayList<>();
+    private List<Student> students;
 
     @Builder
     public Referee(UUID id, Long version, Timestamp createdDate, Timestamp lastModifiedDate, String firstName, String lastName, String email, String phone, List<Student> students) {

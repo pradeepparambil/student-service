@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping(value = "/api/v1/student/referee")
+@RequestMapping(value = "/api/v1/referee")
 @RequiredArgsConstructor
 public class RefereeController {
     private final RefereeService refereeService;
@@ -20,7 +20,7 @@ public class RefereeController {
     public ResponseEntity addNewReferee(@RequestBody RefereeDto refereeDto){
         RefereeDto savedDto = refereeService.saveNewReferee(refereeDto);
         HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.add("Location","/api/v1/student/referee/"
+        httpHeaders.add("Location","/api/v1/referee/"
                 +savedDto.getId());
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
     }

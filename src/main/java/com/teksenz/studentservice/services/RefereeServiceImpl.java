@@ -1,6 +1,7 @@
 package com.teksenz.studentservice.services;
 
 import com.teksenz.studentservice.repositories.RefereeRepository;
+import com.teksenz.studentservice.web.controllers.NotFoundException;
 import com.teksenz.studentservice.web.mapper.RefereeMapper;
 import com.teksenz.studentservice.web.model.RefereeDto;
 import lombok.RequiredArgsConstructor;
@@ -22,14 +23,14 @@ public class RefereeServiceImpl implements RefereeService {
 
     @Override
     public void updateReferee(UUID id, RefereeDto refereeDto) {
-        refereeRepository.findById(id).orElseThrow(()->{throw new RuntimeException("Referee not found");});
+        refereeRepository.findById(id).orElseThrow(()->{throw new NotFoundException("Referee not found");});
         refereeRepository.save(refereeMapper.dtoToReferee(refereeDto));
     }
 
     @Override
     public RefereeDto findRefereeById(UUID id) {
         return refereeMapper.refereeToDto(refereeRepository.findById(id)
-                .orElseThrow(()->{throw new RuntimeException("Referee not found");}));
+                .orElseThrow(()->{throw new NotFoundException("Referee not found");}));
     }
 
     @Override
@@ -39,7 +40,7 @@ public class RefereeServiceImpl implements RefereeService {
 
     @Override
     public void deleteReferee(UUID id) {
-        refereeRepository.findById(id).orElseThrow(()->{throw new RuntimeException("Referee not found");});
+        refereeRepository.findById(id).orElseThrow(()->{throw new NotFoundException("Referee not found");});
         refereeRepository.deleteById(id);
     }
 }

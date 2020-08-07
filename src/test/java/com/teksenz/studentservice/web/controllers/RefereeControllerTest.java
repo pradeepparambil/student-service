@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(controllers = RefereeController.class)
 class RefereeControllerTest {
-    private final String baseUrl = "/api/v1/student/referee/";
+    private final String baseUrl = "/api/v1/referee/";
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -83,5 +83,12 @@ class RefereeControllerTest {
         mockMvc.perform(get(baseUrl+UUID.randomUUID()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+    }
+    @Test()
+    void whenFindARefereree_refereeNotFoundException() throws Exception {
+        given(refereeService.findRefereeById(any())).willThrow(new NotFoundException("Referee not found"));
+        MvcResult mvcResult = mockMvc.perform(get(baseUrl+UUID.randomUUID()))
+                .andExpect(status().isNotFound())
+                .andReturn();
     }
 }

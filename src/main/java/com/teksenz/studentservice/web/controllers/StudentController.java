@@ -39,6 +39,7 @@ public class StudentController {
         return new ResponseEntity(studentService.findById(id),HttpStatus.OK);
     }
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<StudentDto> updateStudent(@PathVariable UUID id,@Validated @RequestBody StudentDto studentDto){
         return new ResponseEntity<>(studentService.updateById(id,studentDto),HttpStatus.OK);
     }

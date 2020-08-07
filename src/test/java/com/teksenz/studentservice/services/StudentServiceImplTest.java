@@ -4,6 +4,7 @@ import com.teksenz.studentservice.domain.Student;
 import com.teksenz.studentservice.repositories.StudentRepository;
 import com.teksenz.studentservice.web.mapper.StudentMapper;
 import com.teksenz.studentservice.web.mapper.StudentMapperImpl;
+import com.teksenz.studentservice.web.model.RefereeDto;
 import com.teksenz.studentservice.web.model.StudentDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +32,6 @@ class StudentServiceImplTest {
     private StudentRepository studentRepository;
     @Mock
     private StudentMapper studentMapper = new StudentMapperImpl();
-
 
     Student getStudent(){
         return Student.builder()

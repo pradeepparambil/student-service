@@ -31,6 +31,7 @@ public class StudentDto extends BaseDto{
     private String occupation;
 
     private String employer;
+    private RefereeDto referredBy;
     @Builder
     public StudentDto(@Null UUID id, @Null Long version, @Null OffsetDateTime createdDate,
                       @Null OffsetDateTime lastModifiedDate, @NotNull String firstName, @NotNull String lastName,

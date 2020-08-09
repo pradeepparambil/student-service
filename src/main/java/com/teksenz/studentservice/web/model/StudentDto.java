@@ -3,22 +3,29 @@ package com.teksenz.studentservice.web.model;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
+import javax.validation.constraints.Size;
 import java.time.OffsetDateTime;
 import java.util.UUID;
 
 @Data
 public class StudentDto extends BaseDto{
-    @NotNull
+    @NotNull(message = "firstName  must not be null")
+    @Size(min = 1, max = 100)
     private String firstName;
-    @NotNull
+    @NotNull(message = "lastName must not be null")
+    @Size(min = 1, max = 100)
     private String lastName;
-    @NotNull
+    @NotNull(message = "email id must not be null")
+    @Email
     private String email;
-    @NotNull
+    @NotNull(message = "phone number must not be null")
+    @Size(min = 10,max = 13)
     private String phoneNo;
-    @NotNull
+    @NotNull(message = "qualification must not be null")
+    @Size(min = 1,max = 50)
     private String qualification;
 
     private String occupation;

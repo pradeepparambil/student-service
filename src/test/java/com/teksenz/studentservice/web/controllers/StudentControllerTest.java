@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,5 +89,16 @@ class StudentControllerTest {
     void deleteStudent() throws Exception {
         given(studentService.findById(any())).willReturn(studentDto);
         mockMvc.perform(delete(baseUrl+UUID.randomUUID())).andExpect(status().isNoContent());
+    }
+
+    @Test
+    void validateFieldsAgainstNull() throws Exception {
+        StudentDto invalidStudent = StudentDto.builder().build();
+        MvcResult mvcResult = mockMvc.perform(post(baseUrl+"enroll")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(invalidStudent)))
+                .andExpect(status().isBadRequest())
+                .andReturn();
+        System.out.println(mvcResult.getResponse().getContentAsString());
     }
 }

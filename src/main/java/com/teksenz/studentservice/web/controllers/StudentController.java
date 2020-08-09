@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,7 +23,7 @@ public class StudentController {
     }
 
     @PostMapping(value = "/enroll",consumes = {"application/json"})
-    public ResponseEntity saveStudent(@Validated @RequestBody StudentDto studentDto){
+    public ResponseEntity saveStudent(@Valid @RequestBody StudentDto studentDto){
         StudentDto savedDto = studentService.save(studentDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/student/" + savedDto.getId().toString());

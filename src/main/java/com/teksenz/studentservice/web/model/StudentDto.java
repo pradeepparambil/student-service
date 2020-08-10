@@ -3,6 +3,7 @@ package com.teksenz.studentservice.web.model;
 import lombok.Builder;
 import lombok.Data;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
@@ -31,7 +32,8 @@ public class StudentDto extends BaseDto{
     private String occupation;
 
     private String employer;
-    private RefereeDto referredBy;
+    @Valid
+    private RefereeDto referee;
     @Builder
     public StudentDto(@Null UUID id, @Null Long version, @Null OffsetDateTime createdDate,
                       @Null OffsetDateTime lastModifiedDate, @NotNull String firstName, @NotNull String lastName,

@@ -84,6 +84,16 @@ public class BootStrap implements CommandLineRunner {
         refereeRepository.saveAndFlush(referee1);
         refereeRepository.saveAndFlush(referee2);
 
+        Student student4 = Student.builder()
+                .firstName("Zilda")
+                .lastName("Mc Crystal")
+                .email("zilda.mccrystal@gmail.com")
+                .phoneNo("1234567890")
+                .qualification("Graduate in Mathematics")
+                .build();
+        student4.setReferee(referee2);
+        studentRepository.save(student4);
+
         System.out.println("Student Count =====>" + studentRepository.count());
 
         System.out.println("Referee Count =====>" + refereeRepository.count());

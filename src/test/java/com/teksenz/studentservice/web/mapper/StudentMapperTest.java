@@ -16,6 +16,8 @@ class StudentMapperTest {
     private StudentMapperImpl studentMapper;
     @Mock
     private DateMapper dateMapper;
+    @Mock
+    private RefereeMapper refereeMapper;
 
     Student getStudent(){
         return Student.builder()

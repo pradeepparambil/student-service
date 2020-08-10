@@ -97,5 +97,6 @@ public class BootStrap implements CommandLineRunner {
         System.out.println("Student Count =====>" + studentRepository.count());
 
         System.out.println("Referee Count =====>" + refereeRepository.count());
+
     }
 }

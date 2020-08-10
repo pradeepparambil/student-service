@@ -1,6 +1,7 @@
 package com.teksenz.studentservice.web.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class RefereeDto extends BaseDto{
     private String email;
     @NotNull
     private String phone;
+    @JsonIgnoreProperties("refereeDto")
     private List<StudentDto> students;
     @Builder
     public RefereeDto(@Null UUID id, @Null Long version, @Null OffsetDateTime createdDate,

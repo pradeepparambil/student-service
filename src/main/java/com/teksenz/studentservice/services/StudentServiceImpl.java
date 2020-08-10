@@ -30,10 +30,10 @@ public class StudentServiceImpl implements StudentService {
     public StudentDto save(StudentDto studentDto) {
         Referee referee = null;
         Student student = studentMapper.dtoToStudent(studentDto);
-        if(studentDto.getReferee()!=null){
-            Optional<Referee> optionalReferee = refereeRepository.findByFirstName(studentDto.getReferee().getFirstName());
+        if(studentDto.getRefereeDto()!=null){
+            Optional<Referee> optionalReferee = refereeRepository.findByFirstName(studentDto.getRefereeDto().getFirstName());
             if(optionalReferee.isEmpty()) {
-                referee = refereeRepository.save(refereeMapper.dtoToReferee(studentDto.getReferee()));
+                referee = refereeRepository.save(refereeMapper.dtoToReferee(studentDto.getRefereeDto()));
 
             }else {
                 referee = optionalReferee.get();

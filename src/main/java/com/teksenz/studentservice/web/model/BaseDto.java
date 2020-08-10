@@ -1,6 +1,7 @@
 package com.teksenz.studentservice.web.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +17,13 @@ public class BaseDto {
     @Null
     private UUID id;
     @Null
+    @JsonIgnore
     Long version;
     @Null
+    @JsonIgnore
     private OffsetDateTime createdDate;
     @Null
+    @JsonIgnore
     private OffsetDateTime lastModifiedDate;
 
 }

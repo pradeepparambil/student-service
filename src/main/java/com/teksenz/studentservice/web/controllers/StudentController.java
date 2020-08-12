@@ -23,14 +23,12 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
-    private final CourseService courseService;
     private final Integer DEFAULT_PAGE_NO = 0;
     private final Integer DEFAULT_PAGE_SIZE = 25;
 
 
     @PostMapping(value = "/enroll",consumes = {"application/json"})
     public ResponseEntity saveStudent(@Valid @RequestBody StudentDto studentDto){
-        CourseDto courseDto = courseService.findCourseToBeEnrolled().orElseThrow(()-> new RuntimeException("Course not found"));
         StudentDto savedDto = studentService.save(studentDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/student/" + savedDto.getId().toString());

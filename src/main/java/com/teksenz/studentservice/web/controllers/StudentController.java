@@ -2,8 +2,11 @@ package com.teksenz.studentservice.web.controllers;
 
 import com.teksenz.studentservice.domain.Student;
 import com.teksenz.studentservice.services.StudentService;
+import com.teksenz.studentservice.services.course.CourseService;
+import com.teksenz.studentservice.services.course.model.CourseDto;
 import com.teksenz.studentservice.web.model.StudentDto;
 import com.teksenz.studentservice.web.model.StudentPagedList;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -17,17 +20,17 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/api/v1/student", produces = {"application/json"})
+@RequiredArgsConstructor
 public class StudentController {
     private final StudentService studentService;
+    private final CourseService courseService;
     private final Integer DEFAULT_PAGE_NO = 0;
     private final Integer DEFAULT_PAGE_SIZE = 25;
 
-    public StudentController(StudentService studentService) {
-        this.studentService = studentService;
-    }
 
     @PostMapping(value = "/enroll",consumes = {"application/json"})
     public ResponseEntity saveStudent(@Valid @RequestBody StudentDto studentDto){
+        CourseDto courseDto = courseService.findCourseToBeEnrolled().orElseThrow(()-> new RuntimeException("Course not found"));
         StudentDto savedDto = studentService.save(studentDto);
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Location", "/api/v1/student/" + savedDto.getId().toString());

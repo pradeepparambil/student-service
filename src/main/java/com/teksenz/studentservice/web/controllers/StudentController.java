@@ -3,6 +3,8 @@ package com.teksenz.studentservice.web.controllers;
 import com.teksenz.studentservice.domain.Student;
 import com.teksenz.studentservice.services.StudentService;
 import com.teksenz.studentservice.web.model.StudentDto;
+import com.teksenz.studentservice.web.model.StudentPagedList;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.UUID;
 @RequestMapping(value = "/api/v1/student", produces = {"application/json"})
 public class StudentController {
     private final StudentService studentService;
+    private final Integer DEFAULT_PAGE_NO = 0;
+    private final Integer DEFAULT_PAGE_SIZE = 25;
 
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
@@ -29,11 +33,21 @@ public class StudentController {
         httpHeaders.add("Location", "/api/v1/student/" + savedDto.getId().toString());
         return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
     }
-    @GetMapping("/")
-    @ResponseStatus(HttpStatus.OK)
-    public List<StudentDto> findAll(){
-        return studentService.findAll();
+    @GetMapping
+    public ResponseEntity<StudentPagedList> findAll(@RequestParam(value = "pageNumber", required = false) Integer pageNumber,
+                                    @RequestParam(value = "pageSize", required = false) Integer pageSize,
+                                    @RequestParam(value = "firstName", required = false)String firstName){
+        if(pageNumber == null || pageNumber <0){
+            pageNumber = DEFAULT_PAGE_NO;
+        }
+        if(pageSize == null || pageSize < 1){
+            pageSize = DEFAULT_PAGE_SIZE;
+        }
+        StudentPagedList studentPagedList =  studentService.listStudents(firstName, PageRequest.of(pageNumber,pageSize));
+        return new ResponseEntity<StudentPagedList>(studentPagedList,HttpStatus.OK);
     }
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<Student> findById(@PathVariable UUID id){

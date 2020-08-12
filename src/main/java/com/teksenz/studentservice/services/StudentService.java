@@ -1,6 +1,8 @@
 package com.teksenz.studentservice.services;
 
 import com.teksenz.studentservice.web.model.StudentDto;
+import com.teksenz.studentservice.web.model.StudentPagedList;
+import org.springframework.data.domain.PageRequest;
 
 import java.util.List;
 import java.util.UUID;
@@ -20,4 +22,6 @@ public interface StudentService {
 
     void deleteById(UUID id);
 
+    StudentPagedList listStudents(String firstName, PageRequest of);
 }
+

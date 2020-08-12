@@ -7,12 +7,14 @@ import com.teksenz.studentservice.repositories.StudentRepository;
 import com.teksenz.studentservice.web.controllers.NotFoundException;
 import com.teksenz.studentservice.web.mapper.RefereeMapper;
 import com.teksenz.studentservice.web.mapper.StudentMapper;
-import com.teksenz.studentservice.web.model.RefereeDto;
 import com.teksenz.studentservice.web.model.StudentDto;
+import com.teksenz.studentservice.web.model.StudentPagedList;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -69,5 +71,21 @@ public class StudentServiceImpl implements StudentService {
     public void deleteById(UUID id) {
         studentRepository.findById(id).orElseThrow(()->new NotFoundException("Student Not Found"));
         studentRepository.deleteById(id);
+    }
+
+    @Override
+    public StudentPagedList listStudents(String firstName, PageRequest pageRequest) {
+        Page<Student> studentPage;
+        if(!StringUtils.isEmpty(firstName)){
+            studentPage = studentRepository.findAllByFirstName(firstName,pageRequest);
+        }else {
+            studentPage = studentRepository.findAll(pageRequest);
+        }
+
+        return new StudentPagedList(
+                studentPage.getContent().stream().map(studentMapper::studentToDto).collect(Collectors.toList()),
+                pageRequest,
+                studentPage.getTotalElements()
+        );
     }
 }

@@ -27,7 +27,6 @@ class RefereeRepositoryTest {
     @Test
     public void saveReferee(){
         refereeRepository.save(getReferee());
-        assertEquals(1,refereeRepository.count(),"Referee is not saved");
     }
 
     @Test
@@ -50,6 +49,5 @@ class RefereeRepositoryTest {
         refereeRepository.save(getReferee());
         Referee referee = refereeRepository.findByFirstName("John").get();
         refereeRepository.deleteById(referee.getId());
-        assertEquals(0,refereeRepository.count());
     }
 }

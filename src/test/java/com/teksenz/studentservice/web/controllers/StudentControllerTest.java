@@ -4,7 +4,11 @@ package com.teksenz.studentservice.web.controllers;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teksenz.studentservice.services.StudentService;
+import com.teksenz.studentservice.services.course.CourseService;
+import com.teksenz.studentservice.services.course.model.CourseDto;
+import com.teksenz.studentservice.services.course.model.CourseState;
 import com.teksenz.studentservice.web.model.StudentDto;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +18,11 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.sql.Timestamp;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -33,12 +40,15 @@ class StudentControllerTest {
     private String baseUrl = "/api/v1/student/";
     @MockBean
     private StudentService studentService;
+    @MockBean
+    CourseService courseService;
     private String studentJsonString;
     private StudentDto studentDto;
+    private CourseDto courseDto;
 
 
     @BeforeEach
-    private void getStudent() throws JsonProcessingException {
+    private void loadData() throws JsonProcessingException {
         studentDto =  StudentDto.builder()
                 .firstName("Bettin")
                 .lastName("Jacob")
@@ -48,12 +58,21 @@ class StudentControllerTest {
                 .build();
         studentJsonString = objectMapper.writeValueAsString(studentDto);
 
+        courseDto = CourseDto.builder()
+                .title("Fullstack Automation - Batch20")
+                .description("Fullstack automation - Java, Selenium, RestAssured, SQL, Maven, Agile")
+                .fee(2000f)
+                .courseState(CourseState.ENROLLMENT)
+                .startDate(OffsetDateTime.now())
+                .expectedEndDate(OffsetDateTime.now())
+                .build();
     }
 
     @Test
     void saveStudent() throws Exception {
         studentDto.setId(UUID.randomUUID());
         given(studentService.save(any())).willReturn(studentDto);
+        given(courseService.findCourseToBeEnrolled()).willReturn(Optional.of(courseDto));
         mockMvc.perform(post(baseUrl+"enroll")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(studentJsonString)

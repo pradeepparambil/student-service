@@ -2,7 +2,6 @@ package com.teksenz.studentservice.services.course;
 
 import com.teksenz.studentservice.services.course.model.CourseDto;
 import com.teksenz.studentservice.services.course.model.CoursePagedList;
-import com.teksenz.studentservice.services.course.model.CourseState;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;

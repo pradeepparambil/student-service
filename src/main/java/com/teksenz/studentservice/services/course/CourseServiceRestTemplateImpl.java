@@ -5,6 +5,7 @@ import com.teksenz.studentservice.services.course.model.CoursePagedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,9 +13,10 @@ import java.util.Optional;
 
 @Slf4j
 @ConfigurationProperties(prefix = "teksenz.course", ignoreUnknownFields = false)
+@Profile("!local-discovery")
 @Component
-public class CourseServiceImpl implements CourseService {
-    private final String COURSE_PATH = "/api/v1/course?courseState=ENROLLMENT";
+public class CourseServiceRestTemplateImpl implements CourseService {
+    public static final String COURSE_PATH = "/api/v1/course?courseState=ENROLLMENT";
     private final RestTemplate restTemplate;
 
     private String courseServiceHost;
@@ -23,7 +25,7 @@ public class CourseServiceImpl implements CourseService {
         this.courseServiceHost = courseServiceHost;
     }
 
-    public CourseServiceImpl(RestTemplateBuilder restTemplateBuilder) {
+    public CourseServiceRestTemplateImpl(RestTemplateBuilder restTemplateBuilder) {
         restTemplate = restTemplateBuilder.build();
     }
 
